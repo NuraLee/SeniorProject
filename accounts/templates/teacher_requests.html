@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2>{% trans "Create Teacher requests" %}</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">{% trans "Send" %}</button>
+            </form>
+        </div>
+    </div>
+    
+    {% for teacher_request in teacher_requests %}
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-12">
+                <a href="{% url 'teacher_request_detail' teacher_request.pk %}"><h5 class="card-title">{% trans "Request Details" %} #{{teacher_request.pk}}</h5></a>
+                <p class="card-text">{% trans "Subject" %}: {{ teacher_request.subject.name }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ teacher_request.grade }}</p>
+                <p class="card-text">{% trans "Theme" %}: {{ teacher_request.theme.name }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+{% block js_script %}
+<script>
+    // window.onload = function() {
+    //     var subjectField = document.getElementById('id_subject');
+    //     var gradeField = document.getElementById('id_grade');
+    //     var themeField = document.getElementById('id_theme');
+    //     var templateField = document.getElementById('id_template');
+
+    //     gradeField.disabled = true;
+    //     themeField.disabled = true;
+    //     templateField.disabled = true;
+
+    //     subjectField.addEventListener('change', function() {
+    //         if (subjectField.value) {
+    //             gradeField.disabled = false;
+    //         } else {
+    //             gradeField.disabled = true;
+    //             themeField.disabled = true;
+    //             templateField.disabled = true;
+    //         }
+    //     });
+
+    //     gradeField.addEventListener('change', function() {
+    //         if (gradeField.value) {
+    //             themeField.disabled = false;
+    //         } else {
+    //             themeField.disabled = true;
+    //             templateField.disabled = true;
+    //         }
+    //     });
+
+    //     themeField.addEventListener('change', function() {
+    //         if (themeField.value) {
+    //             templateField.disabled = false;
+    //         } else {
+    //             templateField.disabled = true;
+    //         }
+    //     });
+    // };
+
+    $(document).ready(function() {
+        $('#id_subject').change(function() {
+            var subject_id = $(this).val();
+            $.ajax({
+                url: '/get_themes/',
+                data: {'subject_id': subject_id},
+                dataType: 'json',
+                success: function(data) {
+                    var themes = data.themes;
+                    var themeDropdown = $('#id_theme');
+                    themeDropdown.empty();
+                    $.each(themes, function(index, theme) {
+                        themeDropdown.append($('<option>', {
+                            value: theme.id,
+                            text: theme.name
+                        }));
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock js_script %}

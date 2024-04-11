@@ -1,0 +1,78 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .jumbotron {
+            padding: 2rem 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    {% get_current_language as CURRENT_LANGUAGE %}
+    {% get_available_languages as AVAILABLE_LANGUAGES %}
+    {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">{% trans "My Website" %}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <a class="nav-link m-2" href="{% url 'home' %} ">{% trans "Home" %} <span class="sr-only">(current)</span></a>
+                <a class="nav-link m-2" href="{% url 'green_page' %} ">{% trans "Green" %} <span class="sr-only">(current)</span></a>
+            </ul>
+            {% if user.is_authenticated %}
+            {% if user.is_customer or user.is_staff %}
+            <a href="{% url 'teacher_requests' %} " class="btn m-2"><i class="fas"></i> {% trans "Request" %}</a>
+            <a href="{% url 'room' %} " class="btn m-2"><i class="fas"></i> {% trans "Chat" %}</a>
+            <a href="{% url 'favorite_materials' %} " class="btn m-2"><i class="fas"></i> {% trans "Favorite Materials" %}</a>
+            <a href="{% url 'my_materials' %} " class="btn m-2"><i class="fas"></i> {% trans "My materials" %}</a>
+            <a href="{% url 'rejections' %} " class="btn m-2"><i class="fas fa-sign-out-alt"></i> {% trans "Rejects" %}</a>
+            {% endif %}
+            <a href="{% url 'logout' %} " class="btn m-2"><i class="fas fa-sign-out-alt"></i> {% trans "Log Out" %}</a>
+            {% else %}
+            <a href="{% url 'login' %} " class="btn m-2"><i class="fas fa-user-tie"></i> {% trans "Log In" %}</a>
+            <a href="{% url 'signup' %} " class="btn m-2"> <i class="fas fa-sign-in-alt"></i> {% trans "Sign Up" %}</a>
+            {% endif %}
+            <div class="nav-item dropdown">
+                <form id="language-form" class="form-inline my-2 my-lg-0" action="{% url 'set_language' %}" method="post">
+                  {% csrf_token %}
+                  <select id="language-select" class="custom-select mr-sm-2" name="language">
+                    {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == CURRENT_LANGUAGE %}selected{% endif %}>
+                      {{ language.name_local }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Link to Bootstrap JS and Popper.js (required for some Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('language-select').addEventListener('change', function () {
+          document.getElementById('language-form').submit();
+        });
+    </script>
+    {% block js_script %}
+    {% endblock %}
+</body>
+
+</html>

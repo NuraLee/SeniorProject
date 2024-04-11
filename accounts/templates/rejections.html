@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    {% for material in materials %}
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-12 mb-4">
+                <a href="{% url 'material_detail' material.pk %}"><h5 class="card-title">{{ material.title }}</h5></a>
+                <p class="card-text">{% trans "Subject" %}: {{ material.subject }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ material.grade }}</p>
+                <p class="card-text">{% trans "Rating" %}: {{ material.rating }}</p>
+                <p class="card-text">{% trans "Views" %}: {{ material.views }}</p>
+                <p class="card-text">{% trans "Uploaded at" %}: {{ material.created_at_with_timezone }}</p>
+                <a href="{{ MEDIA_URL }}{{ material.pdf_file }}" download>{{ material.filename }}</a><br>
+            </div>
+            {% if material.rejections.all %}
+                <div class="col-md-12 mb-4">
+                    <h5>{% trans "Reject Reasons" %}</h5>
+                    {% for item in material.rejections.all %}
+                        <li>{{ item.description }}</li>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="col-md-12">
+                <embed src="{{ material.pdf_file.url }}" type="application/pdf" style="width: 100%; height: 300px;"/>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

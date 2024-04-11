@@ -1,0 +1,377 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-09 02:36+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: accounts/admin.py:16
+msgid "Personal info"
+msgstr ""
+
+#: accounts/models.py:49
+msgid "title"
+msgstr ""
+
+#: accounts/models.py:50 accounts/models.py:110
+msgid "description"
+msgstr ""
+
+#: accounts/models.py:51 accounts/models.py:225
+msgid "pdf_file"
+msgstr ""
+
+#: accounts/models.py:55 accounts/models.py:221
+msgid "subject"
+msgstr ""
+
+#: accounts/models.py:56 accounts/models.py:222
+msgid "grade"
+msgstr ""
+
+#: accounts/models.py:57
+msgid "rating"
+msgstr ""
+
+#: accounts/models.py:58
+msgid "status"
+msgstr ""
+
+#: accounts/models.py:90
+msgid "user_rating"
+msgstr ""
+
+#: accounts/models.py:91
+msgid "user_comment"
+msgstr ""
+
+#: accounts/models.py:92
+msgid "commented_at"
+msgstr ""
+
+#: accounts/models.py:107
+msgid "material"
+msgstr ""
+
+#: accounts/models.py:108
+msgid "expert"
+msgstr ""
+
+#: accounts/models.py:109
+msgid "created_at"
+msgstr ""
+
+#: accounts/models.py:136
+msgid "body"
+msgstr ""
+
+#: accounts/models.py:142 accounts/models.py:167 accounts/models.py:194
+msgid "Name (English)"
+msgstr ""
+
+#: accounts/models.py:143 accounts/models.py:168 accounts/models.py:195
+msgid "Name (Kazakh)"
+msgstr ""
+
+#: accounts/models.py:144 accounts/models.py:169 accounts/models.py:196
+msgid "Name (Russian)"
+msgstr ""
+
+#: accounts/models.py:223
+msgid "theme"
+msgstr ""
+
+#: accounts/models.py:224
+msgid "template"
+msgstr ""
+
+#: accounts/models.py:230
+msgid "content"
+msgstr ""
+
+#: accounts/templates/base.html:23
+msgid "My Website"
+msgstr ""
+
+#: accounts/templates/base.html:30
+msgid "Home"
+msgstr ""
+
+#: accounts/templates/base.html:31
+msgid "Green"
+msgstr ""
+
+#: accounts/templates/base.html:35
+msgid "Request"
+msgstr ""
+
+#: accounts/templates/base.html:36
+msgid "Chat"
+msgstr ""
+
+#: accounts/templates/base.html:37 accounts/templates/favorite_materials.html:4
+msgid "Favorite Materials"
+msgstr ""
+
+#: accounts/templates/base.html:38
+msgid "My materials"
+msgstr ""
+
+#: accounts/templates/base.html:39
+msgid "Rejects"
+msgstr ""
+
+#: accounts/templates/base.html:41
+msgid "Log Out"
+msgstr ""
+
+#: accounts/templates/base.html:43 accounts/templates/registration/login.html:9
+msgid "Log In"
+msgstr ""
+
+#: accounts/templates/base.html:44
+#: accounts/templates/registration/signup.html:13
+msgid "Sign Up"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:10
+#: accounts/templates/green_page.html:17 accounts/templates/green_page.html:40
+#: accounts/templates/home.html:17 accounts/templates/home.html:67
+#: accounts/templates/material_detail.html:10
+#: accounts/templates/my_materials.html:22
+#: accounts/templates/rejections.html:11
+#: accounts/templates/teacher_requests.html:22
+msgid "Subject"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:11
+#: accounts/templates/green_page.html:22 accounts/templates/green_page.html:41
+#: accounts/templates/home.html:22 accounts/templates/home.html:68
+#: accounts/templates/material_detail.html:11
+#: accounts/templates/my_materials.html:23
+#: accounts/templates/rejections.html:12
+#: accounts/templates/teacher_requests.html:23
+msgid "Grade"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:12
+#: accounts/templates/green_page.html:42 accounts/templates/home.html:69
+#: accounts/templates/material_detail.html:12
+#: accounts/templates/material_detail.html:48
+#: accounts/templates/material_detail.html:65
+#: accounts/templates/my_materials.html:24
+#: accounts/templates/rejections.html:13
+msgid "Rating"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:13
+#: accounts/templates/green_page.html:43 accounts/templates/home.html:70
+#: accounts/templates/material_detail.html:13
+#: accounts/templates/my_materials.html:25
+#: accounts/templates/rejections.html:14
+msgid "Views"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:14
+#: accounts/templates/green_page.html:44 accounts/templates/home.html:71
+#: accounts/templates/material_detail.html:14
+#: accounts/templates/my_materials.html:26
+#: accounts/templates/rejections.html:15
+msgid "Uploaded at"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:16
+#: accounts/templates/green_page.html:46 accounts/templates/home.html:73
+#: accounts/templates/my_materials.html:28
+msgid "Author"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:21
+msgid "Remove from Favorites"
+msgstr ""
+
+#: accounts/templates/favorite_materials.html:30
+msgid "No favorite materials found."
+msgstr ""
+
+#: accounts/templates/green_page.html:9 accounts/templates/home.html:9
+msgid "School Materials Catalog"
+msgstr ""
+
+#: accounts/templates/green_page.html:12 accounts/templates/green_page.html:31
+#: accounts/templates/home.html:12 accounts/templates/home.html:31
+msgid "Search"
+msgstr ""
+
+#: accounts/templates/green_page.html:58 accounts/templates/home.html:92
+msgid "Not Logged in"
+msgstr ""
+
+#: accounts/templates/home.html:40
+msgid "Reject Material"
+msgstr ""
+
+#: accounts/templates/home.html:48
+msgid "Reason for Rejection"
+msgstr ""
+
+#: accounts/templates/home.html:54 accounts/templates/home.html:78
+msgid "Reject"
+msgstr ""
+
+#: accounts/templates/home.html:55
+msgid "Close"
+msgstr ""
+
+#: accounts/templates/home.html:77
+msgid "Verify"
+msgstr ""
+
+#: accounts/templates/material_detail.html:15
+msgid "Description"
+msgstr ""
+
+#: accounts/templates/material_detail.html:27
+msgid "Add to Favorites"
+msgstr ""
+
+#: accounts/templates/material_detail.html:30
+msgid "This material is already in your favorites"
+msgstr ""
+
+#: accounts/templates/material_detail.html:33
+msgid "Log in"
+msgstr ""
+
+#: accounts/templates/material_detail.html:33
+msgid "to add this material to your favorites"
+msgstr ""
+
+#: accounts/templates/material_detail.html:39
+msgid "Comment and Rating"
+msgstr ""
+
+#: accounts/templates/material_detail.html:43
+#: accounts/templates/teacher_requests.html:12
+msgid "Send"
+msgstr ""
+
+#: accounts/templates/material_detail.html:51
+msgid "Star"
+msgstr ""
+
+#: accounts/templates/material_detail.html:52
+#: accounts/templates/material_detail.html:53
+#: accounts/templates/material_detail.html:54
+#: accounts/templates/material_detail.html:55
+msgid "Stars"
+msgstr ""
+
+#: accounts/templates/material_detail.html:60
+msgid "Comments"
+msgstr ""
+
+#: accounts/templates/material_detail.html:66
+msgid "Comment"
+msgstr ""
+
+#: accounts/templates/material_detail.html:67
+msgid "Commented at"
+msgstr ""
+
+#: accounts/templates/my_materials.html:8
+msgid "Create Materials"
+msgstr ""
+
+#: accounts/templates/my_materials.html:12
+msgid "Upload"
+msgstr ""
+
+#: accounts/templates/registration/login.html:13
+msgid "Login"
+msgstr ""
+
+#: accounts/templates/registration/login.html:18
+msgid "Sign Up Now"
+msgstr ""
+
+#: accounts/templates/registration/logout.html:7
+msgid "Log In Again"
+msgstr ""
+
+#: accounts/templates/registration/signup.html:9
+msgid "Join Today"
+msgstr ""
+
+#: accounts/templates/registration/signup.html:18
+msgid "Already Have An Account"
+msgstr ""
+
+#: accounts/templates/registration/signup.html:18
+msgid "Sign In"
+msgstr ""
+
+#: accounts/templates/rejections.html:20
+msgid "Reject Reasons"
+msgstr ""
+
+#: accounts/templates/room.html:34
+msgid "Your message..."
+msgstr ""
+
+#: accounts/templates/room.html:40
+msgid "Submit"
+msgstr ""
+
+#: accounts/templates/room.html:79
+msgid "Answer"
+msgstr ""
+
+#: accounts/templates/teacher_request_detail.html:13
+msgid "Save Content"
+msgstr ""
+
+#: accounts/templates/teacher_request_detail.html:15
+msgid "Download PDF"
+msgstr ""
+
+#: accounts/templates/teacher_request_detail_generate_pdf.html:8
+msgid "Generated PDF"
+msgstr ""
+
+#: accounts/templates/teacher_requests.html:8
+msgid "Create Teacher requests"
+msgstr ""
+
+#: accounts/templates/teacher_requests.html:21
+msgid "Request Details"
+msgstr ""
+
+#: accounts/templates/teacher_requests.html:24
+msgid "Theme"
+msgstr ""
+
+#: app/settings.py:127
+msgid "English"
+msgstr ""
+
+#: app/settings.py:128
+msgid "Russian"
+msgstr ""
+
+#: app/settings.py:129
+msgid "Kazakh"
+msgstr ""

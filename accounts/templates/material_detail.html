@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    <h2 class="mb-3">{{ material.title }}</h2>
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-12 mb-4">
+                <p class="card-text">{% trans "Subject" %}: {{ material.subject }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ material.grade }}</p>
+                <p class="card-text">{% trans "Rating" %}: {{ material.rating }}</p>
+                <p class="card-text">{% trans "Views" %}: {{ material.views }}</p>
+                <p class="card-text">{% trans "Uploaded at" %}: {{ material.created_at_with_timezone }}</p>
+                <p class="card-text">{% trans "Description" %}: {{ material.description }}</p>
+            </div>
+            <div class="col-md-12">
+                <embed src="{{ material.pdf_file.url }}" type="application/pdf" style="width: 100%; height: 300px;"/>
+            </div>
+        </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        {% if not is_favorite %}
+        <form id="add-to-favorites-form" action="{% url 'add_to_favorites' pk=material.id %}" method="post">
+                {% csrf_token %}
+                <button id="add-to-favorites-btn" type="submit" class="btn btn-primary">{% trans "Add to Favorites" %}</button>
+            </form>
+        {% else %}
+            <p>{% trans "This material is already in your favorites" %}.</p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'login' %}">{% trans "Log in" %}</a> {% trans "to add this material to your favorites" %}.</p>
+    {% endif %}
+
+    {% if form %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2>{% trans "Comment and Rating" %}</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">{% trans "Send" %}</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <h2>{% trans "Rating" %}</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <li>1 {% trans "Star" %}: {{ material.rating_1_star }}</li>
+            <li>2 {% trans "Stars" %}: {{ material.rating_2_star }}</li>
+            <li>3 {% trans "Stars" %}: {{ material.rating_3_star }}</li>
+            <li>4 {% trans "Stars" %}: {{ material.rating_4_star }}</li>
+            <li>5 {% trans "Stars" %}: {{ material.rating_5_star }}</li>
+        </div>
+    </div>
+
+    {% if material.infos.all %}
+        <h2>{% trans "Comments" %}</h2>
+        {% for info in material.infos.all %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="mt-0">{{ info.user }}</h5>
+                <p class="card-text mb-0">{% trans "Rating" %}: {{ info.user_rating }}</p>
+                <p class="card-text mb-0">{% trans "Comment" %}: {{ info.user_comment }}</p>
+                <p class="mb-0"><small class="text-muted">{% trans "Commented at" %}: {{ info.created_at_with_timezone }}</small></p>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock %}

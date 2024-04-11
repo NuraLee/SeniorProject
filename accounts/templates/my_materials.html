@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2>{% trans "Create Materials" %}</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">{% trans "Upload" %}</button>
+            </form>
+        </div>
+    </div>
+    
+    {% for material in materials %}
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-4">
+                <a href="{% url 'material_detail' material.pk %}"><h5 class="card-title">{{ material.title }}</h5></a>
+                <p class="card-text">{% trans "Subject" %}: {{ material.subject }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ material.grade }}</p>
+                <p class="card-text">{% trans "Rating" %}: {{ material.rating }}</p>
+                <p class="card-text">{% trans "Views" %}: {{ material.views }}</p>
+                <p class="card-text">{% trans "Uploaded at" %}: {{ material.created_at_with_timezone }}</p>
+                <p class="card-text">
+                    <small class="text-muted">{% trans "Author" %}: {{ material.author.username }}</small>
+                </p>
+                <a href="{{ MEDIA_URL }}{{ material.pdf_file }}" download>{{ material.filename }}</a><br>
+                <p>{{material.status}}</p>
+            </div>
+            <div class="col-md-8">
+                <embed src="{{ material.pdf_file.url }}" type="application/pdf" style="width: 100%; height: 300px;"/>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

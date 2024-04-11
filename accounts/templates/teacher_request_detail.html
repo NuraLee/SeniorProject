@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+<div class="jumbotron">
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">{% trans "Save Content" %}</button>
+                    <a href="{% url 'teacher_request_detail_generate_pdf' teacher_request.pk %}" target="_blank">
+                        <button type="button" class="btn btn-primary">{% trans "Download PDF" %}</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

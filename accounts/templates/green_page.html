@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    {% if user.is_authenticated %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2>{% trans "School Materials Catalog" %}</h2>
+            <form method="get">
+                <div class="form-group">
+                    <label for="{{ search_form.search_query.id_for_label }}">{% trans "Search" %}:</label>
+                    {{ search_form.search_query }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ search_form.subject.id_for_label }}">{% trans "Subject" %}:</label>
+                    {{ search_form.subject }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ search_form.grade.id_for_label }}">{% trans "Grade" %}:</label>
+                    {{ search_form.grade }}
+                </div>
+            
+                <!-- <div class="form-group">
+                    <label for="{{ search_form.rating.id_for_label }}">Rating:</label>
+                    {{ search_form.rating }}
+                </div> -->
+            
+                <button type="submit">{% trans "Search" %}</button>
+            </form>
+        </div>
+    </div>
+    {% for material in materials %}
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-4">
+                <a href="{% url 'material_detail' material.pk %}"><h5 class="card-title">{{ material.title }}</h5></a>
+                <p class="card-text">{% trans "Subject" %}: {{ material.subject }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ material.grade }}</p>
+                <p class="card-text">{% trans "Rating" %}: {{ material.rating }}</p>
+                <p class="card-text">{% trans "Views" %}: {{ material.views }}</p>
+                <p class="card-text">{% trans "Uploaded at" %}: {{ material.created_at_with_timezone }}</p>
+                <p class="card-text">
+                    <small class="text-muted">{% trans "Author" %}: {{ material.author.username }}</small>
+                </p>
+                <a href="{{ MEDIA_URL }}{{ material.pdf_file }}" download>{{ material.filename }}</a><br>
+                <p>{{material.status}}</p>
+            </div>
+            <div class="col-md-8">
+                <embed src="{{ material.pdf_file.url }}" type="application/pdf" style="width: 100%; height: 300px;"/>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="lead">{% trans "Not Logged in" %}</p>
+    {% endif %}
+</div>
+{% endblock content %}

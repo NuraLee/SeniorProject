@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+    {% if user.is_authenticated %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2>{% trans "School Materials Catalog" %}</h2>
+            <form method="get">
+                <div class="form-group">
+                    <label for="{{ search_form.search_query.id_for_label }}">{% trans "Search" %}:</label>
+                    {{ search_form.search_query }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ search_form.subject.id_for_label }}">{% trans "Subject" %}:</label>
+                    {{ search_form.subject }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ search_form.grade.id_for_label }}">{% trans "Grade" %}:</label>
+                    {{ search_form.grade }}
+                </div>
+            
+                <!-- <div class="form-group">
+                    <label for="{{ search_form.rating.id_for_label }}">Rating:</label>
+                    {{ search_form.rating }}
+                </div> -->
+            
+                <button type="submit">{% trans "Search" %}</button>
+            </form>
+        </div>
+    </div>
+    {% if user.is_expert %}
+    <div class="modal" id="rejectModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Reject Material" %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="rejectForm">
+                <div class="modal-body">
+                <div class="form-group">
+                    <label for="rejectionReason">{% trans "Reason for Rejection" %}</label>
+                    <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="4" required></textarea>
+                </div>
+                <input type="hidden" id="materialPkInput" name="materialPk">
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">{% trans "Reject" %}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% for material in materials %}
+    <div class="card mb-3">
+        <div class="card-body row">
+            <div class="col-md-4">
+                <a href="{% url 'material_detail' material.pk %}"><h5 class="card-title">{{ material.title }}</h5></a>
+                <p class="card-text">{% trans "Subject" %}: {{ material.subject }}</p>
+                <p class="card-text">{% trans "Grade" %}: {{ material.grade }}</p>
+                <p class="card-text">{% trans "Rating" %}: {{ material.rating }}</p>
+                <p class="card-text">{% trans "Views" %}: {{ material.views }}</p>
+                <p class="card-text">{% trans "Uploaded at" %}: {{ material.created_at_with_timezone }}</p>
+                <p class="card-text">
+                    <small class="text-muted">{% trans "Author" %}: {{ material.author.username }}</small>
+                </p>
+                <a href="{{ MEDIA_URL }}{{ material.pdf_file }}" download>{{ material.filename }}</a><br>
+                {% if user.role == expert_role %}
+                <a href="{% url 'verify_material' material.pk %}" class="btn btn-primary mt-2" role="button">{% trans "Verify" %}</a>
+                <a href="#" class="btn btn-danger mt-2 reject-material" role="button" data-material-pk="{{ material.pk }}">{% trans "Reject" %}</a>
+                {% else %}
+                <p>{{material.status}}</p>
+                {% endif %}
+
+                
+            </div>
+            <div class="col-md-8">
+                <embed src="{{ material.pdf_file.url }}" type="application/pdf" style="width: 100%; height: 300px;"/>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="lead">{% trans "Not Logged in" %}</p>
+    {% endif %}
+</div>
+{% endblock content %}
+{% block js_script %}
+<script>
+    $('.reject-material').click(function(event) {
+        event.preventDefault(); // Prevent default link behavior
+
+        // Retrieve the materialPk value from the data-material-pk attribute
+        var materialPk = $(this).data('material-pk');
+
+        // Set the value of the hidden input field in the modal with the materialPk
+        $('#materialPkInput').val(materialPk);
+
+        // Open the modal
+        $('#rejectModal').modal('show');
+    });
+
+    // JavaScript using jQuery to handle form submission
+    $('#rejectForm').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Fetch the rejection reason from the textarea
+        var rejectionReason = $('#rejectionReason').val();
+
+        // Retrieve the materialPk value from the hidden input field
+        var materialPk = $('#materialPkInput').val();
+
+        // AJAX request to submit the rejection reason
+        fetch('/reject-material/' + materialPk + '/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' // Add CSRF token if using CSRF protection
+            },
+            body: JSON.stringify({ reason: rejectionReason })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Rejection saved successfully, close the modal
+                $('#rejectModal').modal('hide');
+                location.reload();
+                // Optionally, you can reload the page or update the UI as needed
+            } else {
+                // Handle errors or display messages to the user
+                console.error('Failed to save rejection.');
+            }
+        })
+        .catch(error => {
+            console.error('Error occurred:', error);
+        });
+    });
+</script>
+{% endblock %}
